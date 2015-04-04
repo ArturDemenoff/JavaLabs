@@ -1,5 +1,6 @@
 package com.classes;
 
+import com.interfaces.ILogReader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,9 +9,11 @@ import java.text.ParseException;
 /**
  * Created by Artur on 04.04.2015.
  */
-public class LogReader {
+public class LogReader implements ILogReader {
 
-    public String Read(String fileName, int formLine, int lineNumber) throws IOException, ParseException {
+
+    @Override
+    public String read(String fileName, int line, int numLine) throws Exception {
 
         StringBuilder sb = new StringBuilder();
 
@@ -23,10 +26,10 @@ public class LogReader {
 
         while((currentLine = reader.readLine() )!= null)
         {
-            if(i == formLine - 1)
+            if(i == line - 1)
             {
                 sb.append(currentLine + "\n");
-                while((currentLine = reader.readLine() )!= null && j != lineNumber - 1)
+                while((currentLine = reader.readLine() )!= null && j != numLine - 1)
                 {
                     sb.append(currentLine);
                     sb.append("\n");

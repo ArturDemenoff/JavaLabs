@@ -1,4 +1,7 @@
 package com.classes;
+import com.ElemetsOfLines;
+import com.interfaces.ILogParser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -7,7 +10,7 @@ import java.util.Vector;
 /**
  * Created by Artur on 04.04.2015.
  */
-public class LogParser {
+public class LogParser implements ILogParser<ElemetsOfLines> {
 
     Vector<String> Parser(String line)
     {
@@ -27,8 +30,8 @@ public class LogParser {
         return mainBufer;
     }
 
-    public ElemetsOfLines IntoElements(String line) throws ParseException {
-
+    @Override
+    public ElemetsOfLines parse(String line) throws ParseException {
         Vector<String> objectLine = Parser(line);
 
         SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss Z]", Locale.ENGLISH);

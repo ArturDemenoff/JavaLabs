@@ -1,12 +1,10 @@
 package com;
 
-import com.classes.ElemetsOfLines;
-import com.classes.LogParser;
+import com.ElemetsOfLines;
 import com.classes.LogReader;
 import com.classes.LogWriter;
+import com.classes.LogParser;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class FileAnalayzer {
@@ -25,15 +23,15 @@ public class FileAnalayzer {
 
         int lineNumber = Integer.valueOf(args[2]);// количество строк которые нужно считать
 
-        String[] allLines = reader.Read(filePath, lineFrom, lineNumber).split("\n");
+        String[] allLines = reader.read(filePath, lineFrom, lineNumber).split("\n");
 
         Vector<ElemetsOfLines> allElements = new Vector<ElemetsOfLines>();
 
         for(String a : allLines)
         {
-            allElements.add(parser.IntoElements(a));
+            allElements.add(parser.parse(a));
         }
 
-        writer.PrintAllElements(allElements);
+
     }
 }
