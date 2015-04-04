@@ -1,7 +1,6 @@
 package com.main.defaultclass;
 
 import com.labs.Parser.Parser;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.io.*;
 import java.text.ParseException;
@@ -13,44 +12,51 @@ import java.util.*;
  */
 public class Default {
 
-    public static ArrayList<Parser> read(String fileName) throws FileNotFoundException {
+    public static ArrayList<Parser> read(String fileName, int begin, int count) throws IOException, ParseException {
 
         ArrayList<Parser> lines = new ArrayList<Parser>();
 
-        try {
-            BufferedReader in = new BufferedReader(new FileReader( fileName));
-            try {
-                String s;
-                int i = 0;
-                while ((s = in.readLine()) != null) {
-                    i++;
-                   // System.out.print(s + "\n" + i + " ");
-                    lines.add(pars_strings((s)));
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+
+        int i = 0;
+        int j = 0;
+
+        String currentLine;
+
+       // Vector<String> lines = new Vector<String>();
+
+        while((currentLine = reader.readLine() )!= null)
+        {
+            if(i == begin - 1)
+            {
+                lines.add(pars_strings(currentLine));
+                while((currentLine = reader.readLine() )!= null && j != count - 1)
+                {
+                    lines.add(pars_strings(currentLine));
+                    j++;
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                in.close();
+
+                break;
             }
-        } catch(IOException e) {
-            throw new RuntimeException(e);
+            i++;
         }
+
+        reader.close();
 
         return lines;
     }
 
-    public  static void main(String[] args) throws ParseException, FileNotFoundException {
+    public  static void main(String[] args) throws ParseException, IOException {
 
-        ArrayList<Parser> strings = read("E:\\Учеба\\2 курс\\java\\access_log_Aug95");
 
-        for(int i = 0; i < strings.size(); i++)
-        {
-            if(i == 20)
-            {
-                break;
-            }
-            System.out.print(strings.get(i).request);
-        }
+
+        String filePath = args[0];//путь к файлу
+
+        int begin = Integer.valueOf(args[1]);// с какой строки считать
+
+        int count = Integer.valueOf(args[2]);// количество строк которые нужно считать
+
+        ArrayList<Parser> strings = read(filePath,begin,count);
 
     }
 
@@ -61,38 +67,13 @@ public class Default {
 
         String[] bufer = line.split(" - - ");
         mainBufer.add(bufer[0]);
-
-        System.out.print("\n");
-        System.out.print(bufer[0]);
-
         String[] bufer1 = bufer[1].split(" \"");
         mainBufer.add(bufer1[0]);
-
-        System.out.print("\n");
-        System.out.print(bufer1[0]);
-
         bufer = bufer1[1].split("\" ");
         mainBufer.add(bufer[0]);
-
-        System.out.print("\n");
-        System.out.print(bufer[0]);
-
         bufer1 = bufer[1].split(" ");
-
-        if(bufer1[1].contains("-"))
-        {
-            bufer1[1] = bufer1[1].replace('-', '0');
-        }
-
         mainBufer.add(bufer1[0]);
-
-        System.out.print("\n");
-        System.out.print(bufer1[0]);
-
         mainBufer.add(bufer1[1]);
-
-        System.out.print("\n");
-        System.out.print(bufer1[1]);
 
         return mainBufer;
     }

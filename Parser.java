@@ -20,5 +20,4 @@ public class Parser {
         this.reply = reply;
         this.bytes = bytes;
     }
-
 }
