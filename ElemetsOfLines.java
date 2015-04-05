@@ -11,12 +11,12 @@ import java.util.Vector;
 public class ElemetsOfLines {
 
 
-    Vector<Integer>  IP;
-    Vector<String> Adress;
-    Date Date ;
-    String Request;
-    int CodeAnswer;
-    long NumByte;
+    public Vector<Integer>  IP;
+    public Vector<String> Adress;
+    public Date Date ;
+    public String Request;
+    public int CodeAnswer;
+    public long NumByte;
 
     public ElemetsOfLines(Vector<String> adress,Vector<Integer> ip, Date date, String request, int codeAnswer, long numByte) {
         this.Adress = adress;
