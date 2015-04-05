@@ -1,6 +1,5 @@
 package com;
 
-import com.ElemetsOfLines;
 import com.classes.LogReader;
 import com.classes.LogWriter;
 import com.classes.LogParser;
@@ -23,6 +22,8 @@ public class FileAnalayzer {
 
         int lineNumber = Integer.valueOf(args[2]);// количество строк которые нужно считать
 
+        String outFilePath = args[3];// путь для файла записи
+
         String[] allLines = reader.read(filePath, lineFrom, lineNumber).split("\n");
 
         Vector<ElemetsOfLines> allElements = new Vector<ElemetsOfLines>();
@@ -32,6 +33,6 @@ public class FileAnalayzer {
             allElements.add(parser.parse(a));
         }
 
-
+        writer.write(outFilePath,allElements);
     }
 }
