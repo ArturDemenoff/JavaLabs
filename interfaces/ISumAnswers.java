@@ -15,3 +15,5 @@ public interface ISumAnswers {
     public ReportSumAnswers SumOfAnswers(Vector<ElemetsOfLines> outLines, Date fromDate, Date toDate, SimpleDateFormat dateFormat);
 
 }
+/*2012.02.05:15:12:13
+        2012.05.05:15:12:13*/

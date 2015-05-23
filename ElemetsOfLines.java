@@ -53,4 +53,24 @@ public class ElemetsOfLines {
 
         return sb.toString();
     }
+
+    public String GetStringOfAdress()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if(Adress.size() != 0){
+            for (int i = 0; i < Adress.size(); i++) {
+                sb.append(Adress.get(i).toString() + ".");
+            }
+        }
+        else {
+            for(String s : Adress)
+            {
+                sb.append(s + ".");
+            }
+
+        }
+
+        return sb.toString();
+    }
 }

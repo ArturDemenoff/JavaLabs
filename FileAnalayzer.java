@@ -1,20 +1,18 @@
 package com;
 
-import com.classes.LogReader;
-import com.classes.LogWriter;
-import com.classes.LogParser;
+import com.classes.*;
+import com.interfaces.ILogParser;
+import com.interfaces.ILogWriter;
 
-import java.util.Vector;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class FileAnalayzer {
 
     public static void main(String[] args) throws Exception{
 
-        LogReader reader = new LogReader();
-
-        LogParser parser = new LogParser();
-
-        LogWriter writer = new LogWriter();
 
         String filePath = args[0];//путь к файлу
 
@@ -23,16 +21,57 @@ public class FileAnalayzer {
         int lineNumber = Integer.valueOf(args[2]);// количество строк которые нужно считать
 
         String outFilePath = args[3];// путь для файла записи
+        ILogParser<ElemetsOfLines> parser = new LogParser();
+        ILogWriter<Vector<ElemetsOfLines>> writer = new LogWriter();
 
-        String[] allLines = reader.read(filePath, lineFrom, lineNumber).split("\n");
 
-        Vector<ElemetsOfLines> allElements = new Vector<ElemetsOfLines>();
+        LogReader record = new LogReader();
 
-        for(String a : allLines)
+        Vector<String> lines = record.read(filePath, lineFrom, lineNumber);
+
+
+        Vector<ElemetsOfLines> outLines = new Vector<ElemetsOfLines>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd:HH:mm:ss");
+
+        System.out.println("Input from date in format (yyyy.MM.dd:HH:mm:ss): ");
+
+        Scanner scanner = new Scanner(System.in);
+
+        String date = scanner.next();
+        Date fromDate = dateFormat.parse(date);
+
+        System.out.println("Input to date in format (yyyy.MM.dd:HH:mm:ss): ");
+        date = scanner.next();
+        Date toDate =  dateFormat.parse(date);
+
+        for(String line : lines)
         {
-            allElements.add(parser.parse(a));
+            outLines.add(parser.parse(line));
         }
 
-        writer.write(outFilePath,allElements);
+        writer.write(outFilePath, outLines);
+
+        int numofreport = Integer.valueOf(args[4]);
+
+        if(numofreport == 1)
+        {
+            MaxAnswer report = new MaxAnswer();
+            ReportMaxAnswer maxAnswer = report.GetMaxAnswer(outLines,fromDate,toDate);
+
+            System.out.print(maxAnswer.max);
+        }
+        if(numofreport == 2)
+        {
+            SumAnswers report = new SumAnswers();
+            ReportSumAnswers sumAnswers = report.SumOfAnswers(outLines,fromDate,toDate,dateFormat);
+            System.out.print(sumAnswers.sum);
+        }
+        if(numofreport == 3)
+        {
+            MaxAnswer report = new MaxAnswer();
+
+            System.out.print(report.GetMaxAnswer(outLines,fromDate,toDate));
+        }
     }
 }

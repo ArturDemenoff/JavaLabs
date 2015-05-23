@@ -4,7 +4,7 @@ import com.ElemetsOfLines;
 import com.ReportMaxAnswer;
 import com.interfaces.IMaxAnswer;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
@@ -14,7 +14,7 @@ import java.util.Vector;
 public class MaxAnswer implements IMaxAnswer {
 
     @Override
-    public ReportMaxAnswer GetMaxAnswer(Vector<ElemetsOfLines> outLines, Date fromDate, Date toDate, SimpleDateFormat dateFormat) {
+    public ReportMaxAnswer GetMaxAnswer(Vector<ElemetsOfLines> outLines, Date fromDate, Date toDate) {
         int max = 0;
 
         for(ElemetsOfLines element: outLines)

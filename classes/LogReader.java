@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Vector;
 
 /**
  * Created by Artur on 04.04.2015.
@@ -13,11 +14,11 @@ public class LogReader implements ILogReader {
 
 
     @Override
-    public String read(String fileName, int line, int numLine) throws Exception {
-
-        StringBuilder sb = new StringBuilder();
+    public Vector<String> read(String fileName, int line, int numLine) throws Exception {
 
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
+
+        Vector<String> lines = new Vector<String>();
 
         int i = 0;
         int j = 0;
@@ -28,11 +29,11 @@ public class LogReader implements ILogReader {
         {
             if(i == line - 1)
             {
-                sb.append(currentLine + "\n");
+                lines.add(currentLine);
                 while((currentLine = reader.readLine() )!= null && j != numLine - 1)
                 {
-                    sb.append(currentLine);
-                    sb.append("\n");
+                    lines.add(currentLine);
+                    j++;
                 }
 
                 break;
@@ -42,6 +43,6 @@ public class LogReader implements ILogReader {
 
         reader.close();
 
-        return sb.toString();
+        return lines;
     }
 }
